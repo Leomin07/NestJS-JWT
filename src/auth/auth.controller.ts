@@ -1,12 +1,11 @@
-import { Controller } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Body, Controller, Logger, Post, Res } from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { Post } from '@nestjs/common';
-import { Body } from '@nestjs/common';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+  private logger = new Logger();
 
   @Post('/signup')
   signUp(@Body() createUserDto: CreateUserDto): Promise<void> {
@@ -16,7 +15,9 @@ export class AuthController {
   @Post('/login')
   signIn(
     @Body() createUserDto: CreateUserDto,
+    @Res() res: Response,
   ): Promise<{ accessToken: string }> {
+    res.ok;
     return this.authService.signIn(createUserDto);
   }
 }
